@@ -38,3 +38,5 @@ Route::get('/validate','Validate\ValidateStudentController@validatestudent');
 Route::resource('/authentic','Validate\AuthenticStudentController');
 
 Route::resource('/employeedetails','Employee\EmployeedetailController');
+
+Route::resource('/employeelist','Employee\EmployeeListController');

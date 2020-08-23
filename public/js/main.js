@@ -2,6 +2,11 @@ $('.submit').on("submit", function(){
 	return confirm("Do you want to submit details?");
 });
 
+
+$('.apprdisappr').on("submit", function(){
+	return confirm("Do you want to change status of employee?");
+});
+
 var examstarttime = document.getElementById('examstarttime').value;
 var examendtime = document.getElementById('examendtime').value;
 var examdate = document.getElementById('examdate').value;
@@ -37,6 +42,4 @@ var x = setInterval(function() {
      window.location = "http://localhost:8000/";
   }
 }, 1000);
-
-
 
