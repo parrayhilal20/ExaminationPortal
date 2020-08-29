@@ -16,7 +16,7 @@ class EmployeeListController extends Controller
     public function index()
     {
         $count = 1;
-        $employeelist = DB::table('employee_details')->paginate(15);;
+        $employeelist = DB::table('employee_details')->paginate(15);
         return view('employeelist', [ 'employeelist' => $employeelist, 'count' => $count ] );
     }
 
@@ -76,7 +76,7 @@ class EmployeeListController extends Controller
         $count = 1;
 
         $employeelist = DB::table('employee_details')
-                        ->where('employee_nnumber', $id)
+                        ->where('id', $id)
                         ->update([ 'status' => $empstatus ]);
 
         $employeelist = DB::table('employee_details')->paginate(15);

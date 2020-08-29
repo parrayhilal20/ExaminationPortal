@@ -44,9 +44,7 @@ class StudentdetailController extends Controller
         $studentdetail->roll_number = $stdrequest->rollnumber;
         $studentdetail->class = $stdrequest->class;
         $studentdetail->stream = $stdrequest->stream;
-        $studentdetail->exam_start_time = $stdrequest->examstarttime;
-        $studentdetail->exam_end_time = $stdrequest->examendtime;
-        $studentdetail->exam_date = $stdrequest->examdate;
+        $studentdetail->subject = $stdrequest->subject;
         $studentdetail->std_code = $stdrequest->studentcode;
         $photographname    = $stdrequest->file('photograph')->getClientOriginalName();
         $extension         = $stdrequest->file('photograph')->getClientOriginalExtension();

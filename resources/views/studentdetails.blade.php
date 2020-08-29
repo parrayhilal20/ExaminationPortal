@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('title')
-    Student Details
+    Student Exam Details
 @endsection
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ __('Student Details') }}</div>
+                <div class="card-header">{{ __('Student Exam Details') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -21,6 +21,36 @@
                             {{ $successmessage }}
                         </div>
                     @endif
+                    
+                    @if(count($errors) > 0)
+                        <div class="row">
+                            <label class="col-md-4 col-form-label text-md-right"></label>
+                            <div class="col-md-6">
+                                <div class="alert alert-danger">
+                                    Upload Verification <br><br>
+                                    <ul>
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    
+                    {{ Form::open( array( 'url' => 'import',  'class' => 'import', 'enctype' => 'multipart/form-data' ) ) }}
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-md-right">Import Excel File</label>
+                            <div class="col-md-6">
+                                <input type="file" class="form-control" name="studentfile">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-success">
+                                    {{ __('Import') }}
+                                </button>
+                            </div>
+                        </div>
+                    {{ Form::close() }}
 
                     {{ Form::open( array( 'url' => 'studentdetails', 'files' => true, 'class' => 'submit' ) ) }}
                         <div class="form-group row">
@@ -59,21 +89,25 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">Exam Start Time</label>
+                            <label class="col-md-4 col-form-label text-md-right">Subject</label>
                             <div class="col-md-6">
-                                <input type="time" class="form-control" name="examstarttime" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">Exam End Time</label>
-                            <div class="col-md-6">
-                                <input type="time" class="form-control" name="examendtime" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-4 col-form-label text-md-right">Date</label>
-                            <div class="col-md-6">
-                                <input type="date" class="form-control" name="examdate" required>
+                                <select name="subject" id="" class="form-control" required>
+                                    <option value="">--Select--</option>
+                                    <option value="SCIENCE">SCIENCE</option>
+                                    <option value="MATHEMATICS">MATHEMATICS</option>
+                                    <option value="ENGLISH">ENGLISH</option>
+                                    <option value="SOCIAL STUDIES">SOCIAL STUDIES</option>
+                                    <option value="URDU">URDU</option>
+                                    <option value="BOTANY">BOTANY</option>
+                                    <option value="ZOOLOGY">ZOOLOGY</option>
+                                    <option value="CHEMISTRY">CHEMISTRY</option>
+                                    <option value="PHYSICS">PHYSICS</option>
+                                    <option value="ENVIRONMENT SCIENCE">ENVIRONMENT SCIENCE</option>
+                                    <option value="ACCOUNTING">ACCOUNTING</option>
+                                    <option value="ECONOMICS">ECONOMICS</option>
+                                    <option value="EDUCATION">EDUCATION</option>
+                                    <option value="POLITICAL SCIENCE">POLITICAL SCIENCE</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">

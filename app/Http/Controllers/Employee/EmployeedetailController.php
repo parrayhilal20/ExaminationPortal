@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\EmployeeDetail\EmployeeDetailsRequest;
 use App\EmployeeDetail;
+use App\Question\PaperProgress;
+use DB;
+use Auth;
 
 class EmployeedetailController extends Controller
 {
@@ -16,7 +19,29 @@ class EmployeedetailController extends Controller
      */
     public function index()
     {
-        return view('employeedetails');
+        $usertype = Auth::user()->user_type;
+        $userid = Auth::user()->id;
+
+        $userapproved = DB::table('employee_details')
+                        ->where("users_id", $userid)
+                        ->first();
+        if($userapproved == null)
+        {
+            return view("employeedetails");
+        }
+        else
+        {
+            if($userapproved->status == "APPROVED")
+            {
+                return view("addquestionpaper");
+            }
+            elseif($userapproved->status == "NOT APPROVED")
+            { 
+                return view("adminmessage");
+            }
+        }
+        
+      
     }
 
     /**
@@ -39,6 +64,7 @@ class EmployeedetailController extends Controller
     public function store(EmployeeDetailsRequest $request)
     {
         $employeedetail = new EmployeeDetail();
+        $employeedetail->users_id = Auth::user()->id;
         $employeedetail->employee_nnumber   = $request->employeennumber;
         $employeedetail->employee_designation   = $request->designation;
         $employeedetail->employee_department   = $request->department;
@@ -52,8 +78,24 @@ class EmployeedetailController extends Controller
         $request->file('photograph')->move(base_path()."/public/uploads/employee/",$employeephotograph);
         $employeedetail->photograph = $employeephotograph;
         $employeedetail->save();
-        $successmessage = "Details submitted!";
-        return view('employeedetails', [ 'successmessage' => $successmessage ]);
+
+        $employeedetail =   DB::table('employee_details')
+                            ->where('users_id',Auth::user()->id)
+                            ->where('class_allocated',$request->classallocated)
+                            ->where('stream_allocated',$request->streamallocated)
+                            ->where('subject_allocated',$request->subjectallocated)
+                            ->first();
+        
+        
+        $paperprogress = new PaperProgress();
+        $paperprogress->emp_id = $employeedetail->id;
+        $paperprogress->progress = 'NO PROGRESS';
+        $paperprogress->save();
+        // $successmessage = "Details submitted!";
+        //return view('employeedetails', [ 'successmessage' => $successmessage ]);
+        $message = "Your details are pending for approval from admin side!";
+        return view('adminmessage', ["message" => $message]);
+        
     }
 
     /**

@@ -15,6 +15,7 @@ class AddQuestions extends Migration
     {
         Schema::create('add_questions', function (Blueprint $table) {
             $table->id();
+            $table->string('emp_id');
             $table->string('question');
             $table->string('option1');
             $table->string('option2');

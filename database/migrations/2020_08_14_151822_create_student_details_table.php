@@ -19,12 +19,10 @@ class CreateStudentDetailsTable extends Migration
             $table->string('roll_number');
             $table->string('class');
             $table->string('stream');
-            $table->time('exam_start_time');
-            $table->time('exam_end_time');
-            $table->date('exam_date');
+            $table->string('subject');
             $table->string('std_code');
-            $table->string('photograph');
-            $table->string('paper_status');
+            $table->string('photograph')->nullable();
+            $table->string('paper_status')->default("INCOMPLETE");
             $table->timestamps();
         });
     }

@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container content">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -62,6 +62,18 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="user-type" class="col-md-4 col-form-label text-md-right">{{ __('User Type') }}</label>
+
+                            <div class="col-md-6">
+                                <select name="usertype" id="user-type" class="form-control" required>
+                                    <option value="">--Select--</option>
+                                    <option value="FACULTY">FACULTY</option>
+                                    <option value="STUDENT">STUDENT</option>
+                                </select>
                             </div>
                         </div>
 

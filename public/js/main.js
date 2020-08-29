@@ -7,6 +7,18 @@ $('.apprdisappr').on("submit", function(){
 	return confirm("Do you want to change status of employee?");
 });
 
+$('.finalize').on("submit", function(){
+	return confirm("Do you want to finalize your question paper?");
+});
+
+$('.import').on("submit", function(){
+	return confirm("Do you want to import student records from Excel");
+});
+
+$(".content").fadeIn(1000, function() {     
+});
+
+
 var examstarttime = document.getElementById('examstarttime').value;
 var examendtime = document.getElementById('examendtime').value;
 var examdate = document.getElementById('examdate').value;

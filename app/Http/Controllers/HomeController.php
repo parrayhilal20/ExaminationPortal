@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Quesiton\AddQuestion;
 use App\question_response;
 use DB;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -26,7 +27,51 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $usertype = Auth::user()->user_type;
+        $userid = Auth::user()->id;
+
+        $userapproved = DB::table('employee_details')
+                        ->where("users_id", $userid)
+                        ->first();
+        
+        if($usertype == "FACULTY")
+        {
+            if($userapproved == null)
+            {
+                return view("employeedetails");
+            }
+            else
+            {
+                if($userapproved->status == "APPROVED")
+                {
+                    $employeedetail1 = DB::table('employee_details')
+                                       ->join('paper_progress', 'employee_details.id', '=', 'paper_progress.emp_id')
+                                       ->where('paper_progress.progress', "NO PROGRESS")->get();
+                    $employeedetail2 = DB::table('employee_details')
+                                       ->join('paper_progress', 'employee_details.id', '=', 'paper_progress.emp_id')
+                                       ->where('paper_progress.progress', "NO PROGRESS")->get();
+                    $employeedetail3 = DB::table('employee_details')
+                                       ->join('paper_progress', 'employee_details.id', '=', 'paper_progress.emp_id')
+                                       ->where('paper_progress.progress', "NO PROGRESS")->get();
+                                       
+                    return view("selectexam",['employeedetail1' => $employeedetail1, 'employeedetail2' => $employeedetail2, 'employeedetail3' => $employeedetail3]);
+                }
+                elseif($userapproved->status == "NOT APPROVED")
+                {
+                    $message = "Your details are pending for approval from admin side!";
+                    return view("adminmessage", ["message" => $message]);
+                }
+            }
+        }
+        elseif($usertype == "STUDENT")
+        {
+            $studentcode = 'OES-'.rand();
+            return view('studentdetails', [ 'studentcode' => $studentcode ] );
+        }
+        else
+        {
+            return view('home');
+        }
     }
 
      /**
@@ -35,7 +80,16 @@ class HomeController extends Controller
      */
     public function addquestion(Request $request)
     {
+        $employeedetail =   DB::table('employee_details')
+                            ->where('users_id',Auth::user()->id)
+                            ->where('class_allocated',$request->class)
+                            ->where('stream_allocated',$request->stream)
+                            ->where('subject_allocated',$request->subject)
+                            ->first();
+        
         $addquestions = new AddQuestion;
+        $addquestions->emp_id = $employeedetail->id;
+        $addquestions->question = $request->addquestion;
         $addquestions->question = $request->addquestion;
         $addquestions->option1  = $request->option1;
         $addquestions->option2  = $request->option2;
@@ -56,7 +110,6 @@ class HomeController extends Controller
         $questionresponse->save();
 
         $successmessage = "Data saved. Proceed to Add Next Question";
-        return view('/home',['successmessage' => $successmessage]);
-
+        return view('/addquestionpaper',['successmessage' => $successmessage, 'classdetail' => $employeedetail]);
     }
 }

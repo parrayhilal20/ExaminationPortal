@@ -23,7 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/home', 'HomeController@addquestion')->name('home');
 
@@ -40,3 +40,13 @@ Route::resource('/authentic','Validate\AuthenticStudentController');
 Route::resource('/employeedetails','Employee\EmployeedetailController');
 
 Route::resource('/employeelist','Employee\EmployeeListController');
+
+Route::resource('/addexamschedule','Admin\AddExamScheduleController');
+
+Route::resource('/examschedules','Admin\ExamSchedulesController');
+
+Route::resource('/import', 'Admin\ImportController');
+
+Route::resource('/selectexam','Questionpaper\SelectExamController');
+
+Route::resource('/finalizepaper','Questionpaper\FinalizeQuestionpaperController');

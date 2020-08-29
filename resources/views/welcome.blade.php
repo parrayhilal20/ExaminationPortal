@@ -3,7 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script>
+            $(function() {
+                $(".content2").fadeIn(2000, function() {     
+                });
+            });
+        </script>
         <title>Home</title>
 
         <!-- Fonts -->
@@ -60,7 +66,19 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .content2 {
+                display:none;
+            }
+            /* .preload { 
+                width:50px;
+                height: 50px;
+                position: fixed;
+                top: 0%;
+                left: 15%;
+            } */
+
         </style>
+        
     </head>
     <body>
         <div class="flex-center position-ref full-height">
@@ -77,10 +95,10 @@
                     @endauth
                 </div>
             @endif
-
-            <div class="content">
+            
+            <div class="content content2">
                 <div class="title m-b-md">
-                    Online Exam System
+                    Online Examination Systems
                 </div>
             </div>
         </div>

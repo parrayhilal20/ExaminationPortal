@@ -40,9 +40,6 @@
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th colspan="9">{{ $employeelist->links() }}</th>
-                                </tr>
-                                <tr>
                                     <th>S.No</th>
                                     <th>Emp No</th>
                                     <th>Designation</th>
@@ -52,7 +49,10 @@
                                     <th>Subject Alctd</th>
                                     <th>Status</th>
                                     <th>Photo</th>
-                                    <th>Decision</th>
+                                    <th>Update</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="9">{{ $employeelist->links() }}</th>
                                 </tr>
                             </tfoot>
 
@@ -71,7 +71,7 @@
                                             <img src="{{asset('uploads/employee')}}/{{$employeelist->photograph}}" alt="Employee Image" class="img-thumbnail rounded mx-auto d-block" style="height:50px; width: 50px;">
                                         </td>
                                         <td>
-                                            {{ Form::open( array( 'url' => 'employeelist/'.$employeelist->employee_nnumber, 'class' => 'apprdisappr', 'method' => 'PUT' ) ) }}
+                                            {{ Form::open( array( 'url' => 'employeelist/'.$employeelist->id, 'class' => 'apprdisappr', 'method' => 'PUT' ) ) }}
                                                 @if($employeelist->status == "NOT APPROVED")
                                                     <input type="hidden" name="status" value="APPROVED">
                                                     <button type="submit" class="btn btn-success">
